@@ -5,6 +5,12 @@ import { COLORS, WEIGHTS } from '../../constants';
 import { formatPrice, pluralize, isNewShoe } from '../../utils';
 import Spacer from '../Spacer';
 
+const text = {
+  'new-release': 'Just released!',
+  'on-sale': 'Sale',
+  default: '',
+}
+
 const ShoeCard = ({
   slug,
   name,
@@ -34,6 +40,7 @@ const ShoeCard = ({
   return (
     <Link href={`/shoe/${slug}`}>
       <Wrapper>
+        {text[variant] && <StyledFlag variant={variant}>{text[variant]}</StyledFlag>}
         <ImageWrapper>
           <Image alt="" src={imageSrc} />
         </ImageWrapper>
@@ -50,18 +57,34 @@ const ShoeCard = ({
   );
 };
 
+const StyledFlag = styled.div`
+  position: absolute;
+  top: 12px;
+  right: -4px;
+  padding: 8px 12px;
+  font-size: 0.875rem;
+  border-radius: 4px;
+  font-weight: ${WEIGHTS.medium};
+  color: white;
+  background-color: ${props => props.variant === 'on-sale' ? COLORS.primary : COLORS.secondary};
+  z-index: 1;
+`;
+
 const Link = styled.a`
   text-decoration: none;
   color: inherit;
+  flex: 0 0 calc(calc(100% - 100px) / 3);
 `;
 
-const Wrapper = styled.article``;
+const Wrapper = styled.article`
+position: relative;`;
 
 const ImageWrapper = styled.div`
   position: relative;
 `;
 
-const Image = styled.img``;
+const Image = styled.img`
+width: 100%;`;
 
 const Row = styled.div`
   font-size: 1rem;
